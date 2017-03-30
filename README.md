@@ -6,7 +6,7 @@ This is command line google translator which I wrote some times ago to be able t
 
 ##### No-IP DDNS host update
 Small script which allow update of dynamic DNS on No-IP DDNS service.
-Filename: ipupdate.sh
+\\Filename: ipupdate.sh
 
 ##### whatismyip
 Simply come back with your external IP
