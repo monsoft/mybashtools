@@ -1,0 +1,106 @@
+#!/bin/bash
+##################################
+# Mount Playbook media share     #
+# by Monsoft		             #
+# (c) 2014,2016 Ascot, UK	     #
+# http://www.adminondemand.co.uk #
+##################################
+
+# Script require gvfs-fuse to be installed
+# On Debian/Ubuntu systems run:
+# sudo apt-get install gvfs-fuse
+# If usb0 interface don't have IP
+# add to /etc/network/interfaces:
+# auto usb0
+# allow-hotplug usb0
+# iface usb0 inet dhcp
+
+
+function show_help_screen() {
+	echo -e "\nPlaybook mount by Monsoft"
+	echo -e "-------------------------\n"
+	echo "Usage:"
+	echo -e "\t connect_playbook [-r] local_mount_point\n"
+	echo -e "\t-r\t Unmount playbook mount"
+	exit 1
+}
+
+# Main
+if [ $# -eq 0 ]
+	then
+		show_help_screen
+fi
+
+case $1 in
+	-r)
+		if [ -a ~/.connect_playbook ]
+			then
+				rm -rf $(cat ~/.connect_playbook)
+				rm -rf ~/.connect_playbook
+				gvfs-mount -u $(gvfs-mount -l|awk -F">" '/media/ {print $2}')
+				echo "Playbook unmounted"
+				exit 0
+			else
+				echo "No mountpoint found !!!"
+				exit 1
+		fi
+		;;
+	 *)
+		if [ -a $1 ]; 
+			then
+				echo "Location $1 already exist"
+				exit 1
+			else
+				# LOCAL_MP is a local mount point directory
+				LOCAL_MP=$1
+				echo $LOCAL_MP > ~/.connect_playbook
+				
+				# Get IP address of usb0 interface
+				LOCAL_IP=$(/sbin/ifconfig usb0 2> /dev/null|awk '/inet addr:/ {print $2}'|cut -d":" -f2)
+				if [ -z $LOCAL_IP ]
+					then
+						echo "No Playbook found"
+						exit 1
+				fi
+
+				IP_TAB=(${LOCAL_IP//./ })
+
+				# Calculate Playbook IP address
+				let "IP_TAB[3] -= 1"
+
+				PLAYBOOK_IP=$(echo "${IP_TAB[@]}"|tr " " ".")
+
+				# Test Connectivity with Playbook
+				ping -c1 $PLAYBOOK_IP &> /dev/null
+
+				if [ $? -ne 0 ]
+					then
+						echo "No Playbook connected"
+						exit 1
+				fi
+
+				MOUNT_POINT=$(mount -l|awk '/gvfsd-fuse/ {print $3}')
+
+				echo -e "\nPlaybook mount by Monsoft"
+				echo "-------------------------"
+				echo "Playbook IP: $PLAYBOOK_IP"
+				echo -en "Mounting Playbook share "
+				gvfs-mount smb://$PLAYBOOK_IP/media
+				if [ $? -ne 0 ]
+					then
+						echo "[ NOT OK ]"
+						exit 1
+				fi
+				echo "[OK]"
+
+				echo "Playbook mounted directory: $LOCAL_MP"
+			#	P_MOUNT_POINT="$MOUNT_POINT/$(gvfs-mount -l|awk '/media/ {print $2"\\ "$3"\\ "$4}')"
+			#	eval ln -s $P_MOUNT_POINT $LOCAL_MP
+			#   smb-share:server=169.254.246.145,share=media
+			#   ln -sf /run/user/$USERID/gvfs/smb-share\:server\=$SERVERIP\,share\=$SHARE ~/network_$SHARE # Directory in Ubuntu 14.04
+				eval ln -s /run/user/$(id -u $USER)/gvfs/smb-share\:server\=$PLAYBOOK_IP\,share\=media/ ~/$LOCAL_MP
+				
+			
+		fi
+		;;
+esac
