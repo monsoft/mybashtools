@@ -1,0 +1,25 @@
+#!/bin/bash
+# bash timediff by Irek <ipelech@blackberry.com>
+
+if [ $# -ne 2 ]; then
+	echo -e "timediff - No time provided !!! \n"
+	echo "Usage:"
+	echo -e "\t$(basename $0) start_time end_time"
+	echo -e "Example:"
+	echo -e "\t$(basename $0) 13:10 16:32"
+
+    	exit 1;
+fi
+
+read -a START <<< $(echo $1|tr ":" "\n")
+read -a END <<< $(echo $2|tr ":" "\n")
+
+
+ALL_MINUTES=$(( $(( (${END[0]} * 60) + ${END[1]} )) - $(( (${START[0]} * 60) + ${START[1]} )) ))
+if [ "$ALL_MINUTES" -le "60" ]; then
+	echo "Worting time is $ALL_MINUTES minutes"
+	else
+		HOURS=$(( ALL_MINUTES / 60 ))
+		MINUTES=$(( ALL_MINUTES - (HOURS * 60) ))
+		echo "Working time is $HOURS hours and $MINUTES minutes ($HOURS.$MINUTES = $ALL_MINUTES minutes)"
+fi
