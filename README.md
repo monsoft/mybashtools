@@ -22,12 +22,12 @@ It will convert currency based on google finance converter.
 
 Filename: convert.sh
 
-#### TimeDiff
+##### TimeDiff
 Calculate amount of time between two times figures. Usefull for calculate working time. I use it when I'm filling Oncall form.
 
 Filename: timediff
 
-#### Mod Security log parser
+##### Mod Security log parser
 This is small parser of logs from Mod Security WAF.
 
 Filename: logpars.sh
