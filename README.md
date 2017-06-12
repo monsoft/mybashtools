@@ -30,4 +30,4 @@ Filename: timediff
 ##### Mod Security log parser
 This is small parser of logs from Mod Security WAF.
 
-Filename: logpars.sh
+Filename: modsecpars
