@@ -34,6 +34,6 @@ Filename: modsecpars
 
 ##### Very simply csv to vCard contacts converter
 It converts contacts stored in CSV file to vCard format. Wrote it in few minutes to move my phone contacts from Blackberry to iPhone.
-Used with ipdparse to extract contacts from IPD format (https://sites.google.com/site/ipdparse/downloads).
+Used with ipdparse to extract contacts from IPD format (https://sites.google.com/site/ipdparse/downloads) and iCloud Contacts to upload vCard file.
 
 Filename: csv2vcard.sh
