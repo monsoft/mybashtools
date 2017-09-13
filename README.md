@@ -31,3 +31,8 @@ Filename: timediff
 This is small parser of logs from Mod Security WAF.
 
 Filename: modsecpars
+
+##### Very simply csv to vCard contacts converter
+It converts contacts stored in CSV file to vCard format. Wrote it in few minutes to move my phone contacts from Blackberry to iPhone.
+
+Filename: csv2vcard.sh
