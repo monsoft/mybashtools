@@ -37,3 +37,9 @@ It converts contacts stored in CSV file to vCard format. Wrote it in few minutes
 Used with ipdparse to extract contacts from IPD format (https://sites.google.com/site/ipdparse/downloads) and iCloud Contacts to upload vCard file.
 
 Filename: csv2vcard.sh
+
+##### FastS3scanner 
+It looks for publicly accessible S3 buckets based on list of words provided in text file.
+Small, dirty, simple and fast.
+
+Filename: fastS3scan.sh
