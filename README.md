@@ -43,3 +43,9 @@ It looks for publicly accessible S3 buckets based on list of words provided in t
 Small, dirty, simple and fast.
 
 Filename: fastS3scan.sh
+
+####  CentOs 6 security announce checker
+This script looks on CentOs security patch website and parse information about newest security updates published on it. 
+CentOs repositories doesn’t use channels (like Redhat) and there is no way to list/check what are new security updates.
+
+Filenames: centos-secannounce.sh email.body.txt
