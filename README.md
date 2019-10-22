@@ -49,3 +49,9 @@ This script looks on CentOs security patch website and parse information about n
 CentOs repositories doesn’t use channels (like Redhat) and there is no way to list/check what are new security updates.
 
 Filenames: centos-secannounce.sh email.body.txt
+
+#### Bad Apple 
+Simple and raw bad apple in ascii implementation which runs in Linux text terminal. 
+1st approach.
+
+Filenames: centos-secannounce.sh
